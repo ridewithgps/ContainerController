@@ -86,24 +86,11 @@ open class ContainerController: NSObject {
     }
     
     private var deviceHeight: CGFloat {
-        var height: CGFloat = 0.0
-        if isPortrait {
-            height = ContainerDevice.screenMax
-        } else {
-            height = ContainerDevice.screenMin
-        }
-        height -= topBarHeight
-        return height
+        (controller?.view.bounds.size.height ?? ContainerDevice.screenMax) - topBarHeight
     }
     
     private var deviceWidth: CGFloat {
-        var width: CGFloat = 0.0
-        if isPortrait {
-            width = ContainerDevice.screenMin
-        } else {
-            width = ContainerDevice.screenMax
-        }
-        return width
+        controller?.view.bounds.size.width ?? ContainerDevice.screenMin
     }
     
     // MARK: - Positions Move
@@ -348,7 +335,7 @@ open class ContainerController: NSObject {
     // MARK: - Create Shadow-Button
     
     private func createShadowButton() {
-        shadowButton = UIButton(frame: CGRect(x: 0, y: 0, width: ContainerDevice.screenMax, height: ContainerDevice.screenMax))
+        shadowButton = UIButton(frame: CGRect(x: 0, y: 0, width: deviceWidth, height: deviceHeight))
         shadowButton.isUserInteractionEnabled = false
         shadowButton.backgroundColor = .black
         shadowButton.alpha = 0.0
