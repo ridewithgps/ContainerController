@@ -85,8 +85,13 @@ open class ContainerController: NSObject {
         return ContainerDevice.isPortrait
     }
     
+    public var avoidTopBar = true
     private var deviceHeight: CGFloat {
-        (controller?.view.bounds.size.height ?? ContainerDevice.screenMax) - topBarHeight
+        if avoidTopBar {
+            return (controller?.view.bounds.size.height ?? ContainerDevice.screenMax) - topBarHeight
+        } else {
+            return (controller?.view.bounds.size.height ?? ContainerDevice.screenMax)
+        }
     }
     
     private var deviceWidth: CGFloat {
@@ -821,7 +826,7 @@ open class ContainerController: NSObject {
                             type: ContainerMoveType,
                             animation: Bool) {
         
-        delegate?.containerControllerMove(self, position: position, type: type, animation: animation)
+         delegate?.containerControllerMove(self, position: position, type: type, animation: animation)
     }
     
     //MARK: - Shadow Alpha Level
